@@ -20,28 +20,33 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class QuickSortBenchmark {
     private  Integer[] array;
+    private Sort s1, s2, s3;
 
-    @Setup(Level.Invocation)
-    public void setup(){
-        this.array = Array.getArray(10_000_000);
+    @Setup(Level.Iteration)
+    public void setupInitialArray(){
+//        this.array = Array.getArray(10_000_000);
+        this.array = Array.getArray(100_000);
+        this.s1 = Quicksort.createNaiveRecursive(Arrays.copyOf(array, array.length));
+        this.s2 = Quicksort.createRecursive(Arrays.copyOf(array, array.length));
+        this.s3 = Quicksort.createIterative(Arrays.copyOf(array, array.length));
     }
     @Benchmark
-    public void benchmarkNaiveQuickSort() {
-        new Quicksort.NaivePivot<>(array).sort();
-    }
-
-    @Benchmark
-    public void benchmarkRandomQuickSort() {
-        new Quicksort.RandomPivot<>(array).sort();
-    }
-
-    @Benchmark
-    public void benchmarkIterativeQuickSort() {
-        new Quicksort.RandomIterative<>(array).sort();
+    public void naiveQuickSort() {
+        s1.sort();
     }
 
     @Benchmark
-    public void benchmarkNativeSort() {
+    public void randomQuickSort() {
+        s2.sort();
+    }
+
+    @Benchmark
+    public void iterativeQuickSort() {
+        s3.sort();
+    }
+
+    @Benchmark
+    public void arraySort() {
         Collections.sort(Arrays.asList(array));
     }
 }

@@ -29,13 +29,13 @@ public class QuicksortTest {
         });
     }
 
-    private Quicksort s1, s2, s3;
+    private Sort s1, s2, s3;
     private Integer[] data;
 
     public QuicksortTest(String test, Integer[] i) {
-        this.s1 = new Quicksort.NaivePivot<>(Arrays.copyOf(i, i.length));
-        this.s2 = new Quicksort.RandomPivot<>(Arrays.copyOf(i, i.length));
-        this.s3 = new Quicksort.RandomIterative<>(Arrays.copyOf(i, i.length));
+        this.s1 = Quicksort.createNaiveRecursive(Arrays.copyOf(i, i.length));
+        this.s2 = Quicksort.createRecursive(Arrays.copyOf(i, i.length));
+        this.s3 = Quicksort.createIterative(Arrays.copyOf(i, i.length));
         this.data = i;
     }
 
@@ -54,7 +54,7 @@ public class QuicksortTest {
         System.out.println(out + "\nTime(ms): " + (after - before));
     }
 
-    private String assertSorted(Quicksort sort) {
+    private String assertSorted(Sort sort) {
         long before = System.currentTimeMillis();
         assertTrue("This sort did not sort", Array.isSorted(sort.sort()));
         long after = System.currentTimeMillis();

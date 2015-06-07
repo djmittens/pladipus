@@ -7,24 +7,32 @@ import java.util.Random;
 
 /**
  */
-public abstract class  Quicksort <T extends Comparable<T>> {
+public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
 
-    /**
-     * Uses the best implementation of Quicksort to sort the given list
-     * @param list List of given objects to sort with some stuff.
-     * @param <E> Object type to sort
-     */
-    public static <E extends Comparable<E>> void sort(E[] list) {
-        new RandomIterative<E>(list).sort();
+    public static <E extends Comparable<E>> Sort<E> createRecursive(E[] list) {
+        return new Quicksort<>(list, new RandomPivot());
     }
+
+    public static <E extends Comparable<E>> Sort<E> createNaiveRecursive(E[] list) {
+        return new Quicksort<>(list, new NaivePivot());
+    }
+
+    public static <E extends Comparable<E>> Sort<E> createIterative(E[] list) {
+        return new Iterative<>(list, new RandomPivot());
+    }
+
+
 
     protected T[] list;
+    private PivotPicker picker;
 
-    Quicksort(T[] list) {
+    Quicksort(T[] list, PivotPicker picker) {
         this.list = list;
+        this.picker = picker;
+
     }
 
-    T[] sort() {
+    public T[] sort() {
 //        System.out.println("Sorting " + Arrays.toString(list));
         sort(0, list.length - 1);
         return list;
@@ -38,8 +46,16 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Pick a pivot then,
+     * Run through all elements from left to right building a store on the left side corresponding to all
+     * the elements that are smaller than pivot.
+     * @param left index of the left bound
+     * @param right index of the right bound
+     * @return index of the new pivot location
+     */
     protected int partition(int left, int right) {
-        int pivot = pickPivot(left, right);
+        int pivot = picker.pickPivot(left, right);
         // Place the pivot all the way to the right
         swap(pivot, right);
 //        System.out.println("Pivot " + list[pivot]);
@@ -58,31 +74,29 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         return store;
     }
 
-
-    /**
-     * Select a pivot point within this range.
-     * @param left
-     * @param right
-     * @return
-     */
-    protected abstract int pickPivot(int left, int right);
-
     protected final void swap(int left, int right) {
         T t = list[left];
         list[left] = list[right];
         list[right] = t;
     }
 
-    public static class RandomPivot<T extends Comparable<T>> extends Quicksort<T>{
+    private interface PivotPicker {
+        /**
+         * Pick a pivot element within two bounds
+         *
+         * @param left index of the left bound(inclusive)
+         * @param right index of the right bound(inclusive)
+         * @return [pivot] index
+         */
+        int pickPivot(int left, int right);
+    }
 
-        private Random random;
+    private static class RandomPivot implements PivotPicker {
 
-        RandomPivot(T[] list) {
-            super(list);
-            this.random = new Random();
-        }
+        private static final Random random = new Random();
 
-        protected  int pickPivot(int left, int right) {
+        @Override
+        public  int pickPivot(int left, int right) {
             if(left >= right)
                 throw new IllegalArgumentException("Partition: Left must be less than Right");
             // We pick the pivot randomly.
@@ -92,33 +106,27 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         }
     }
 
+    private static class NaivePivot implements PivotPicker {
 
-    /**
-     * This implementation uses right most
-     */
-    public static class NaivePivot<T extends Comparable<T>> extends Quicksort<T>{
-
-        NaivePivot(T[] list) {
-            super(list);
-        }
-
-        protected  int pickPivot(int left, int right) {
+        @Override
+        public int pickPivot(int left, int right) {
             return right;
         }
     }
 
-    public static class RandomIterative<T extends Comparable<T>> extends RandomPivot<T> {
+
+    private static class Iterative<T extends Comparable<T>> extends Quicksort<T> {
 
         Deque<int[]> ops;
 
 
-        RandomIterative(T[] list) {
-            super(list);
-            ops = new ArrayDeque<>();
+        Iterative(T[] list, PivotPicker picker) {
+            super(list, picker);
+            ops = new ArrayDeque<>((int)Math.log(list.length));
         }
 
         @Override
-        T[] sort() {
+        public T[] sort() {
 //            System.out.println("Sorting: " + Arrays.toString(list));
             ops.add(new int[] {0, list.length - 1} );
             while(!ops.isEmpty()) {
