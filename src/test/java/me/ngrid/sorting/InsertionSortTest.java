@@ -2,12 +2,12 @@ package me.ngrid.sorting;
 
 import org.junit.Test;
 
-public class SelectionSortTest extends SortTest {
+public class InsertionSortTest extends SortTest {
     private Sort<Integer> sort;
 
-    public SelectionSortTest(String run, Integer[] array) {
+    public InsertionSortTest(String run, Integer[] array) {
         super(run, array);
-        sort = SelectionSort.getInstance(array);
+        sort = InsertionSort.getInstance(array);
     }
 
     @Test(timeout=10_000)

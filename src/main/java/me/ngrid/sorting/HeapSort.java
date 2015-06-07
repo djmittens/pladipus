@@ -63,7 +63,7 @@ public class HeapSort<T extends Comparable<T>> implements Sort<T> {
         }
 
         // If we found that the root was not the largest, we have to make sure that after swapping,
-        // it remains the largest;
+        // the children of the largest node keep the binary heap shape.
         if(largest != root) {
             swap(list, root, largest);
             heapify(largest, max);

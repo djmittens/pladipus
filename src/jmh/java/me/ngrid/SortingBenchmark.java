@@ -3,7 +3,7 @@ package me.ngrid;
 import me.ngrid.sorting.HeapSort;
 import org.openjdk.jmh.annotations.*;
 import me.ngrid.sorting.Quicksort;
-import me.ngrid.sorting.SelectionSort;
+import me.ngrid.sorting.InsertionSort;
 import me.ngrid.sorting.Sort;
 import me.ngrid.util.Array;
 
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  */
-@BenchmarkMode(Mode.SingleShotTime)
+@BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(1)
 @Warmup(iterations = 1)
@@ -30,7 +30,7 @@ public class SortingBenchmark {
         this.s1 = Quicksort.createNaiveRecursive(Arrays.copyOf(array, array.length));
         this.s2 = Quicksort.createRecursive(Arrays.copyOf(array, array.length));
         this.s3 = Quicksort.createIterative(Arrays.copyOf(array, array.length));
-        this.s4 = SelectionSort.getInstance(Arrays.copyOf(array, array.length));
+        this.s4 = InsertionSort.getInstance(Arrays.copyOf(array, array.length));
         this.s5 = HeapSort.getInstance(Arrays.copyOf(array, array.length));
     }
     @Benchmark
