@@ -2,11 +2,15 @@ package sorting;
 
 /**
  */
-public class Selection <T extends Comparable<T>> {
+public class SelectionSort<T extends Comparable<T>> implements Sort<T> {
     private boolean sorted;
 
+    public static <E extends Comparable<E>> Sort<E> getInstance(E[] list) {
+        return new SelectionSort<>(list);
+    }
+
     private T[] list;
-    Selection(T[] list) {
+    private SelectionSort(T[] list) {
         this.list = list;
         this.sorted = false;
     }

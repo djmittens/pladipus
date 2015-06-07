@@ -1,9 +1,6 @@
 package sorting;
 
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.ThreadParams;
-import org.openjdk.jmh.results.BenchmarkTaskResult;
-import org.openjdk.jmh.runner.InfraControl;
 import util.Array;
 
 import java.util.Arrays;
@@ -12,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  */
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(1)
 @Warmup(iterations = 1)
@@ -22,7 +19,7 @@ public class QuickSortBenchmark {
     private  Integer[] array;
     private Sort s1, s2, s3;
 
-    @Setup(Level.Iteration)
+    @Setup(Level.Invocation)
     public void setupInitialArray(){
 //        this.array = Array.getArray(10_000_000);
         this.array = Array.getArray(100_000);
