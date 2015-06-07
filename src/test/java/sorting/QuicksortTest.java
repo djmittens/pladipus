@@ -25,7 +25,7 @@ public class QuicksortTest {
                 {"Shuffled #10", Array.getArray(10)},
                 {"Shuffled #100", Array.getArray(100)},
                 {"Shuffled #1000", Array.getArray(1000)},
-                {"Shuffled #100_000", Array.getArray(100_000)},
+                {"Shuffled #400_000", Array.getArray(400_000)},
         });
     }
 
@@ -42,11 +42,11 @@ public class QuicksortTest {
     @Test
     public void testSort() throws Exception {
         String out = "# Naive Approach";
-//        out += "\n" + assertSorted(s1);
-        System.out.println("# Randomly Pivoted");
-//        out += "\n" + assertSorted(s1);
-        System.out.println("# Iterative Random Pivot");
         out += "\n" + assertSorted(s1);
+        System.out.println("# Randomly Pivoted");
+        out += "\n" + assertSorted(s2);
+        System.out.println("# Iterative Random Pivot");
+        out += "\n" + assertSorted(s3);
         out += "\n# Arrays.sort()";
         long before = System.currentTimeMillis();
         Arrays.sort(data);

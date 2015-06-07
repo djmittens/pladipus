@@ -6,25 +6,42 @@ import org.openjdk.jmh.results.BenchmarkTaskResult;
 import org.openjdk.jmh.runner.InfraControl;
 import util.Array;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
  */
 @BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 3)
-//@State(Scope.Thread)
+@Warmup(iterations = 1)
+@Measurement(iterations = 10)
+@State(Scope.Benchmark)
 public class QuickSortBenchmark {
+    private  Integer[] array;
 
-
-////    @Setup(Level.Invocation)
-//    public void setup(){
-////        this.array = Array.getArray(1_000_000);
-//    }
+    @Setup(Level.Invocation)
+    public void setup(){
+        this.array = Array.getArray(10_000_000);
+    }
     @Benchmark
     public void benchmarkNaiveQuickSort() {
-        new Quicksort.NaivePivot<>(Array.getArray(1_000_000)).sort();
+        new Quicksort.NaivePivot<>(array).sort();
+    }
+
+    @Benchmark
+    public void benchmarkRandomQuickSort() {
+        new Quicksort.RandomPivot<>(array).sort();
+    }
+
+    @Benchmark
+    public void benchmarkIterativeQuickSort() {
+        new Quicksort.RandomIterative<>(array).sort();
+    }
+
+    @Benchmark
+    public void benchmarkNativeSort() {
+        Collections.sort(Arrays.asList(array));
     }
 }
