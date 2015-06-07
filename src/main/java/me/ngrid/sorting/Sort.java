@@ -1,4 +1,4 @@
-package sorting;
+package me.ngrid.sorting;
 
 /**
  * This interface specifies that a given collections is sortable.

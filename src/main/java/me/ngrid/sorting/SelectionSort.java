@@ -1,4 +1,4 @@
-package sorting;
+package me.ngrid.sorting;
 
 /**
  */

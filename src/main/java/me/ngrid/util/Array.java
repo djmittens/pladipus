@@ -1,4 +1,4 @@
-package util;
+package me.ngrid.util;
 
 import java.util.Arrays;
 import java.util.Collections;
