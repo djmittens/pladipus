@@ -42,7 +42,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         int pivot = pickPivot(left, right);
         // Place the pivot all the way to the right
         swap(pivot, right);
-        System.out.println("Pivot " + list[pivot]);
+//        System.out.println("Pivot " + list[pivot]);
         // Value in the store is guranteed to be < pivot
         int store = left;
         for(int i = left; i < right; i ++) {
@@ -54,7 +54,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         }
         // In the end store points to last position in the subarray that is sorted.
         swap(store, right);
-        System.out.println(Arrays.toString(list));
+//        System.out.println(Arrays.toString(list));
         return store;
     }
 
@@ -114,7 +114,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
 
         RandomIterative(T[] list) {
             super(list);
-            ops = new ArrayDeque<>(4);
+            ops = new ArrayDeque<>();
         }
 
         @Override
