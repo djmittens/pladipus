@@ -25,7 +25,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
     }
 
     T[] sort() {
-        System.out.println("Sorting " + Arrays.toString(list));
+//        System.out.println("Sorting " + Arrays.toString(list));
         sort(0, list.length - 1);
         return list;
     }
@@ -119,7 +119,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
 
         @Override
         T[] sort() {
-            System.out.println("Sorting: " + Arrays.toString(list));
+//            System.out.println("Sorting: " + Arrays.toString(list));
             ops.add(0);
             ops.add(list.length - 1);
             while(!ops.isEmpty()) {
