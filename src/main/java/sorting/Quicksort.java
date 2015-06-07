@@ -109,7 +109,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
 
     public static class RandomIterative<T extends Comparable<T>> extends RandomPivot<T> {
 
-        Deque<Integer> ops;
+        Deque<int[]> ops;
 
 
         RandomIterative(T[] list) {
@@ -120,10 +120,10 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         @Override
         T[] sort() {
 //            System.out.println("Sorting: " + Arrays.toString(list));
-            ops.add(0);
-            ops.add(list.length - 1);
+            ops.add(new int[] {0, list.length - 1} );
             while(!ops.isEmpty()) {
-                sort(ops.pop(), ops.pop());
+                int [] c = ops.pop();
+                sort(c[0], c[1]);
             }
             return list;
         }
@@ -133,11 +133,9 @@ public abstract class  Quicksort <T extends Comparable<T>> {
             if(left < right) {
                 int pi = partition(left, right);
                 // Left partition
-                ops.add(left);
-                ops.add(pi - 1);
+                ops.add(new int[] {left, pi - 1});
                 // Right partition
-                ops.add(pi + 1);
-                ops.add(right);
+                ops.add(new int[] {pi + 1, right});
             }
         }
     }
