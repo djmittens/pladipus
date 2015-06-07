@@ -1,25 +1,27 @@
 package sorting;
 
-import util.Array;
-
-import java.awt.geom.QuadCurve2D;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.Random;
 
 /**
  */
 public abstract class  Quicksort <T extends Comparable<T>> {
 
+    /**
+     * Uses the best implementation of Quicksort to sort the given list
+     * @param list List of given objects to sort with some stuff.
+     * @param <E> Object type to sort
+     */
     public static <E extends Comparable<E>> void sort(E[] list) {
-        new Quicksort<E>(list).sort();
+        new RandomIterative<E>(list).sort();
     }
 
-    private T[] list;
-    private Random random;
+    protected T[] list;
 
     Quicksort(T[] list) {
         this.list = list;
-        this.random = new Random();
     }
 
     T[] sort() {
@@ -50,9 +52,9 @@ public abstract class  Quicksort <T extends Comparable<T>> {
                 store ++;
             }
         }
-        System.out.println(Arrays.toString(list));
         // In the end store points to last position in the subarray that is sorted.
         swap(store, right);
+        System.out.println(Arrays.toString(list));
         return store;
     }
 
@@ -71,10 +73,13 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         list[right] = t;
     }
 
-    public class RandomPivot extends Quicksort<T>{
+    public static class RandomPivot<T extends Comparable<T>> extends Quicksort<T>{
+
+        private Random random;
 
         RandomPivot(T[] list) {
             super(list);
+            this.random = new Random();
         }
 
         protected  int pickPivot(int left, int right) {
@@ -91,7 +96,7 @@ public abstract class  Quicksort <T extends Comparable<T>> {
     /**
      * This implementation uses right most
      */
-    public class NaivePivot extends Quicksort<T>{
+    public static class NaivePivot<T extends Comparable<T>> extends Quicksort<T>{
 
         NaivePivot(T[] list) {
             super(list);
@@ -102,7 +107,38 @@ public abstract class  Quicksort <T extends Comparable<T>> {
         }
     }
 
-    public class RandomIterative extends Quicksort<T> {
-        
+    public static class RandomIterative<T extends Comparable<T>> extends RandomPivot<T> {
+
+        Deque<Integer> ops;
+
+
+        RandomIterative(T[] list) {
+            super(list);
+            ops = new ArrayDeque<>(4);
+        }
+
+        @Override
+        T[] sort() {
+            System.out.println("Sorting: " + Arrays.toString(list));
+            ops.add(0);
+            ops.add(list.length - 1);
+            while(!ops.isEmpty()) {
+                sort(ops.pop(), ops.pop());
+            }
+            return list;
+        }
+
+        @Override
+        void sort(int left, int right) {
+            if(left < right) {
+                int pi = partition(left, right);
+                // Left partition
+                ops.add(left);
+                ops.add(pi - 1);
+                // Right partition
+                ops.add(pi + 1);
+                ops.add(right);
+            }
+        }
     }
 }
