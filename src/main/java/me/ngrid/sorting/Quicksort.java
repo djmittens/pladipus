@@ -1,10 +1,22 @@
 package me.ngrid.sorting;
 
+import me.ngrid.util.Array;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 
 /**
+ * Quicksort is a simplified variation of the median sort, yet it provides a much better average case performance.
+ * Worst:    O(n<sup>2</sup>)
+ * Best:     O(nlog(n))
+ * Average:  O(nlog(n))
+ *
+ * Worst case scenario appears when using an already sorted list which creates an empty partition
+ * on the right every time.
+ *
+ * Provided are 3 variations on the algorithm, however please note, recursive implementations are faster, than queue
+ * based one, but will most definately have stack overflow problems for large enough lists with deep recursions.
  */
 public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
 
@@ -32,7 +44,6 @@ public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
     }
 
     public T[] sort() {
-//        System.out.println("Sorting " + Arrays.toString(list));
         sort(0, list.length - 1);
         return list;
     }
@@ -56,28 +67,21 @@ public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
     protected int partition(int left, int right) {
         int pivot = picker.pickPivot(left, right);
         // Place the pivot all the way to the right
-        swap(pivot, right);
-//        System.out.println("Pivot " + list[pivot]);
+        Array.swap(list, pivot, right);
         // Value in the store is guranteed to be < pivot
         int store = left;
         for(int i = left; i < right; i ++) {
             // Comparing each value to the pivot to see if they are greater.
             if(list[i].compareTo(list[right]) <= 0  ) {
-                swap(store, i);
+                Array.swap(list, store, i);
                 store ++;
             }
         }
         // In the end store points to last position in the subarray that is sorted.
-        swap(store, right);
-//        System.out.println(Arrays.toString(list));
+        Array.swap(list, store, right);
         return store;
     }
 
-    protected final void swap(int left, int right) {
-        T t = list[left];
-        list[left] = list[right];
-        list[right] = t;
-    }
 
     private interface PivotPicker {
         /**
@@ -94,6 +98,13 @@ public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
 
         private static final Random random = new Random();
 
+        /**
+         * Using a random generator, pick a random element from the given range.
+         * @param left index of the left bound(inclusive)
+         * @param right index of the right bound(inclusive)
+         * @return index of the pivot that we have selected
+         * @throws IllegalArgumentException when the range defined is empty or reversed.
+         */
         @Override
         public  int pickPivot(int left, int right) {
             if(left >= right)
@@ -126,7 +137,6 @@ public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
 
         @Override
         public T[] sort() {
-//            System.out.println("Sorting: " + Arrays.toString(list));
             ops.add(new int[] {0, list.length - 1} );
             while(!ops.isEmpty()) {
                 int [] c = ops.pop();
@@ -135,6 +145,9 @@ public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
             return list;
         }
 
+        /**
+         * Variation on the sorting to add tasks to a queue, instead of recursing.
+         */
         @Override
         void sort(int left, int right) {
             if(left < right) {

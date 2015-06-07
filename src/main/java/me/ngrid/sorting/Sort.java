@@ -5,7 +5,7 @@ package me.ngrid.sorting;
  */
 public interface Sort <T extends Comparable<T>> {
     /**
-     * Perform the sort.
+     * Perform the sorting operation.
      *
      * @return sorted array
      */

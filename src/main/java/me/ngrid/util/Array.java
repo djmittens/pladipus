@@ -21,6 +21,18 @@ public class Array {
         return true;
     }
 
+    /**
+     * Swap two elements inplace inside of an array
+     * @param list array to perform the action on
+     * @param left index inside of array
+     * @param right index inside of array
+     * @param <T> the type of the array elements must be Comparable
+     */
+    public static<T extends Comparable<T>> void swap(T[] list, int left, int right) {
+        T t = list[left];
+        list[left] = list[right];
+        list[right] = t;
+    }
 
     public static Integer[] getArray(int size) {
         Integer[] array = new Integer[size];

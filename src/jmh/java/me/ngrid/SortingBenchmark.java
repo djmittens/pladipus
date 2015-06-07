@@ -1,5 +1,6 @@
 package me.ngrid;
 
+import me.ngrid.sorting.HeapSort;
 import org.openjdk.jmh.annotations.*;
 import me.ngrid.sorting.Quicksort;
 import me.ngrid.sorting.SelectionSort;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class SortingBenchmark {
     private  Integer[] array;
-    private Sort s1, s2, s3, s4;
+    private Sort s1, s2, s3, s4, s5;
 
     @Setup(Level.Invocation)
     public void setupInitialArray(){
@@ -30,6 +31,7 @@ public class SortingBenchmark {
         this.s2 = Quicksort.createRecursive(Arrays.copyOf(array, array.length));
         this.s3 = Quicksort.createIterative(Arrays.copyOf(array, array.length));
         this.s4 = SelectionSort.getInstance(Arrays.copyOf(array, array.length));
+        this.s5 = HeapSort.getInstance(Arrays.copyOf(array, array.length));
     }
     @Benchmark
     public void naiveQuickSort() {
@@ -49,6 +51,11 @@ public class SortingBenchmark {
     @Benchmark
     public void selectionSort() {
         s4.sort();
+    }
+
+    @Benchmark
+    public void heapSort() {
+        s5.sort();
     }
 
     @Benchmark

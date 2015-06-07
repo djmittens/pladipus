@@ -12,17 +12,13 @@ import java.util.Arrays;
 @RunWith(Parameterized.class)
 public class QuicksortTest extends SortTest{
 
-
-
     private Sort s1, s2, s3;
-    private Integer[] data;
 
     public QuicksortTest(String test, Integer[] i) {
         super(test, i);
         this.s1 = Quicksort.createNaiveRecursive(Arrays.copyOf(i, i.length));
         this.s2 = Quicksort.createRecursive(Arrays.copyOf(i, i.length));
         this.s3 = Quicksort.createIterative(Arrays.copyOf(i, i.length));
-        this.data = i;
     }
 
     @Test
