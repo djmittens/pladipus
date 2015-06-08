@@ -11,9 +11,8 @@ public class SequentialSearchTest extends SearchTest{
 
     public SequentialSearchTest(String trial, Integer[] data, Integer searchTerm, Integer position) {
         super(trial, data, searchTerm, position);
-        s = new SequentialSearch<>(Arrays.asList(data));
+        s = SequentialSearch.getInstance(data);
     }
-
 
     @Test
     public void testContains() throws Exception {

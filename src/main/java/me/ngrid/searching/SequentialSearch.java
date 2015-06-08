@@ -1,5 +1,6 @@
 package me.ngrid.searching;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class SequentialSearch <T extends Comparable<T>>
         implements Searchable<T> {
     List<T> list;
 
-    public SequentialSearch (List<T> list)  {
+    private SequentialSearch (List<T> list)  {
         this.list = list;
     }
     @Override
@@ -27,5 +28,13 @@ public class SequentialSearch <T extends Comparable<T>>
             }
         }
         return -1;
+    }
+
+    public static <E extends Comparable<E>> Searchable<E> getInstance(List<E> list) {
+        return new SequentialSearch<>(list);
+    }
+
+    public static <E extends Comparable<E>> Searchable<E> getInstance(E[] list) {
+        return getInstance(Arrays.asList(list));
     }
 }

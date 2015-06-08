@@ -11,6 +11,7 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * Parametrized harness to test various searching algorithms.
  */
 @RunWith(Parameterized.class)
 public abstract class SearchTest {
@@ -45,6 +46,7 @@ public abstract class SearchTest {
                         a = Array.getSortedIntegerArray(400_000), a[pos = random.nextInt(400_000)], pos},
         });
     }
+
     private static Integer getElementNotInList (Integer[] array) {
         List list = Arrays.asList(array);
         Integer out = random.nextInt();
@@ -65,7 +67,7 @@ public abstract class SearchTest {
      * @param idx index inside of the array that was found.
      */
     public void assertFound(Integer idx) {
-        assertEquals("Wrong element was found " + idx, idx, position);
+        assertEquals("Wrong element was found " + idx, position, idx);
     }
 
     public Integer getSearchTerm() {

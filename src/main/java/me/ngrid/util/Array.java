@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  */
 public class Array {
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     /**
      * Check if the provided array is indeed sorted in O(n) time
