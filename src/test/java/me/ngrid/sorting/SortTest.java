@@ -15,15 +15,15 @@ public abstract class SortTest {
 
     @Parameterized.Parameters(name = "{0}")
     public static Iterable<Object[]> data() {
-        Integer[] sorted = Array.getArray(1000);
+        Integer[] sorted = Array.getIntegerArray(1000);
         Arrays.sort(sorted);
 
         return Arrays.asList(new Object[][]{
-                {"Shuffled #10", Array.getArray(10)},
-                {"Shuffled #100", Array.getArray(100)},
-                {"Shuffled #1000", Array.getArray(1000)},
+                {"Shuffled #10", Array.getIntegerArray(10)},
+                {"Shuffled #100", Array.getIntegerArray(100)},
+                {"Shuffled #1000", Array.getIntegerArray(1000)},
                 {"Sorted #1000", sorted},
-                {"Shuffled #400_000", Array.getArray(400_000)},
+                {"Shuffled #400_000", Array.getIntegerArray(400_000)},
         });
     }
     private Integer[] array;

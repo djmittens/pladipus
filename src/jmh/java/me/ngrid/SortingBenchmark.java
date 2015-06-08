@@ -4,7 +4,7 @@ import me.ngrid.sorting.HeapSort;
 import org.openjdk.jmh.annotations.*;
 import me.ngrid.sorting.Quicksort;
 import me.ngrid.sorting.InsertionSort;
-import me.ngrid.sorting.Sort;
+import me.ngrid.sorting.Sortable;
 import me.ngrid.util.Array;
 
 import java.util.Arrays;
@@ -21,12 +21,12 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class SortingBenchmark {
     private  Integer[] array;
-    private Sort s1, s2, s3, s4, s5;
+    private Sortable s1, s2, s3, s4, s5;
 
     @Setup(Level.Invocation)
     public void setupInitialArray(){
-//        this.array = Array.getArray(10_000_000);
-        this.array = Array.getArray(10_000);
+//        this.array = Array.getIntegerArray(10_000_000);
+        this.array = Array.getIntegerArray(10_000);
         this.s1 = Quicksort.createNaiveRecursive(Arrays.copyOf(array, array.length));
         this.s2 = Quicksort.createRecursive(Arrays.copyOf(array, array.length));
         this.s3 = Quicksort.createIterative(Arrays.copyOf(array, array.length));

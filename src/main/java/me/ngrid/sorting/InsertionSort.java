@@ -11,10 +11,10 @@ package me.ngrid.sorting;
  * Worst:   O(n<sup>2</sup>)
  * Average: O(n<sup>2</sup>)
  */
-public class InsertionSort<T extends Comparable<T>> implements Sort<T> {
+public class InsertionSort<T extends Comparable<T>> implements Sortable<T> {
     private boolean sorted;
 
-    public static <E extends Comparable<E>> Sort<E> getInstance(E[] list) {
+    public static <E extends Comparable<E>> Sortable<E> getInstance(E[] list) {
         return new InsertionSort<>(list);
     }
 

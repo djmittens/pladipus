@@ -18,17 +18,17 @@ import java.util.Random;
  * Provided are 3 variations on the algorithm, however please note, recursive implementations are faster, than queue
  * based one, but will most definately have stack overflow problems for large enough lists with deep recursions.
  */
-public class  Quicksort <T extends Comparable<T>> implements Sort<T> {
+public class  Quicksort <T extends Comparable<T>> implements Sortable<T> {
 
-    public static <E extends Comparable<E>> Sort<E> createRecursive(E[] list) {
+    public static <E extends Comparable<E>> Sortable<E> createRecursive(E[] list) {
         return new Quicksort<>(list, new RandomPivot());
     }
 
-    public static <E extends Comparable<E>> Sort<E> createNaiveRecursive(E[] list) {
+    public static <E extends Comparable<E>> Sortable<E> createNaiveRecursive(E[] list) {
         return new Quicksort<>(list, new NaivePivot());
     }
 
-    public static <E extends Comparable<E>> Sort<E> createIterative(E[] list) {
+    public static <E extends Comparable<E>> Sortable<E> createIterative(E[] list) {
         return new Iterative<>(list, new RandomPivot());
     }
 

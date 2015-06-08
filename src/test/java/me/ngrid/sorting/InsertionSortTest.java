@@ -3,7 +3,7 @@ package me.ngrid.sorting;
 import org.junit.Test;
 
 public class InsertionSortTest extends SortTest {
-    private Sort<Integer> sort;
+    private Sortable<Integer> sort;
 
     public InsertionSortTest(String run, Integer[] array) {
         super(run, array);

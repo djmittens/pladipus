@@ -1,7 +1,6 @@
 package me.ngrid.util;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -9,6 +8,14 @@ import java.util.Random;
 public class Array {
     private static Random random = new Random();
 
+    /**
+     * Check if the provided array is indeed sorted in O(n) time
+     *
+     * Best Worst and Average cases are all O(n).
+     * @param array unit of test
+     * @param <T> Naturally sorted array.
+     * @return {true|false} iff the array follows a natural order.
+     */
     public static <T extends Comparable<T>> boolean isSorted( T[] array) {
         if (array == null || array.length == 0) {
             throw new IllegalArgumentException("Array to be sorted must not be empty");
@@ -34,12 +41,27 @@ public class Array {
         list[right] = t;
     }
 
-    public static Integer[] getArray(int size) {
+    /**
+     * Return a random integer array of a given size.
+     * @param size of the array to return
+     * @return a generated random array.
+     */
+    public static Integer[] getIntegerArray(int size) {
         Integer[] array = new Integer[size];
         for (int i = 0; i < array.length; i++) {
             array[i] =  random.nextInt();
         }
-        Collections.shuffle(Arrays.asList(array));
         return array;
+    }
+
+    /**
+     * Generate a random integer array, then sort it.
+     * @param size size of the array to generate
+     * @return sorted random array.
+     */
+    public static Integer[] getSortedIntegerArray(int size) {
+        Integer[] out = getIntegerArray(size);
+        Arrays.sort(out);
+        return  out;
     }
 }

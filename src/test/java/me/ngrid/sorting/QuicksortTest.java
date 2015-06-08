@@ -12,7 +12,7 @@ import java.util.Arrays;
 @RunWith(Parameterized.class)
 public class QuicksortTest extends SortTest{
 
-    private Sort s1, s2, s3;
+    private Sortable s1, s2, s3;
 
     public QuicksortTest(String test, Integer[] i) {
         super(test, i);

@@ -13,9 +13,9 @@ import static me.ngrid.util.Array.swap;
  *
  * @param <T>
  */
-public class HeapSort<T extends Comparable<T>> implements Sort<T> {
+public class HeapSort<T extends Comparable<T>> implements Sortable<T> {
 
-    public static <E extends Comparable<E>> Sort<E> getInstance(E[] list) {
+    public static <E extends Comparable<E>> Sortable<E> getInstance(E[] list) {
         return new HeapSort<>(list);
     }
 
