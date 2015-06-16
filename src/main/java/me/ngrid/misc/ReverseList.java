@@ -1,5 +1,6 @@
 package me.ngrid.misc;
 
+
 import java.util.*;
 
 /**
@@ -11,17 +12,13 @@ public class ReverseList {
     public static ListNode reverseList(ListNode head) {
         if(head == null)
             return null;
-        Deque<ListNode> d = new ArrayDeque<>();
-
-        while (head != null) {
-            d.push(head);
-            head = head.next;
-        }
-
-        head = d.peek();
-        while(!d.isEmpty()) {
-            ListNode tmp = d.pop();
-            tmp.next = d.peek();
+        ListNode tmp = head.next;
+        head.next = null;
+        while(tmp != null) {
+            ListNode next = tmp.next;
+            tmp.next = head;
+            head = tmp;
+            tmp = next;
         }
         return head;
     }
