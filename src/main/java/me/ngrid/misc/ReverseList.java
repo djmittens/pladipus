@@ -37,13 +37,14 @@ public class ReverseList {
     }
 
     public static String toString(ListNode list) {
-        List<Integer> out= new ArrayList<>();
-        out.add(list.val);
+        StringBuilder sb = new StringBuilder("[");
+        sb.append(list.val);
         ListNode next = list.next;
         while(next != null) {
-            out.add(next.val);
+            sb.append(", ");
+            sb.append(next.val);
             next = next.next;
         }
-        return Arrays.toString(out.toArray());
+        return sb.append("]").toString();
     }
 }
