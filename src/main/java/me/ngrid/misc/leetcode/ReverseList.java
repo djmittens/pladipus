@@ -1,4 +1,4 @@
-package me.ngrid.misc;
+package me.ngrid.misc.leetcode;
 
 
 import java.util.*;
@@ -23,15 +23,6 @@ public class ReverseList {
         return head;
     }
 
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x, ListNode next) {val = x; this.next = next;}
-        @Override
-        public String toString() {
-            return Integer.toString(val);
-        }
-    }
 
     public static String toString(ListNode list) {
         StringBuilder sb = new StringBuilder("[");

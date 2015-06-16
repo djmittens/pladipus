@@ -22,4 +22,9 @@ public class CalculatorTest {
     public void testRightAssociativity() throws Exception {
         assertEquals(3.0001220703125d, Calculator.evaluateExpression(" 3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"), .0000001d);
     }
+
+    @Test
+    public void testComplex () {
+        assertEquals(6d, Calculator.evaluateExpression("(1+1) + 3 * 2 - (4/2)"), .0001d);
+    }
 }
