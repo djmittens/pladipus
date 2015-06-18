@@ -25,15 +25,15 @@ public class MaximalSquare {
                 }
             }
         }
+        --pow;
         return pow * pow;
     }
 
     private boolean dfs(char[][] m, int x, int y, int pow) {
-        if(m.length - x < x + pow || m[0].length - y < y + pow )
-            return false;
         for(int i = x; i < x + pow; i++) {
             for(int k = y; k < y + pow; k++) {
-                if(m[i][k] == '0')
+                if(i == m.length || k == m[0].length
+                        || m[i][k] == '0')
                     return false;
             }
         }
