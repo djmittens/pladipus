@@ -2,15 +2,15 @@ package me.ngrid.misc.leetcode;
 
 /**
  * Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area.
-
- For example, given the following matrix:
-
- 1 0 1 0 0
- 1 0 1 1 1
- 1 1 1 1 1
- 1 0 0 1 0
- Return 4.
-
+ * <p>
+ * For example, given the following matrix:
+ * <p>
+ * 1 0 1 0 0
+ * 1 0 1 1 1
+ * 1 1 1 1 1
+ * 1 0 0 1 0
+ * Return 4.
+ *
  * @see <a href="https://leetcode.com/problems/maximal-square/">l33tc0d3</a>
  */
 public class MaximalSquare {
