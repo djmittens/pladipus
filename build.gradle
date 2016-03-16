@@ -14,6 +14,8 @@ plugins {
 apply plugin: 'me.champeau.gradle.jmh'
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+// Learning some scala too
+apply plugin: 'scala'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -29,8 +31,14 @@ jmh {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+    // Scala / Akka
+    compile 'org.scala-lang:scala-library:2.11.8'
+    compile 'com.typesafe.akka:akka-actor_2.11:2.4.2'
+
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.12'
+
+    // Benchmarking
     jmh 'commons-io:commons-io:2.4'
     compile 'org.openjdk.jmh:jmh-core:1.9.3'
 
