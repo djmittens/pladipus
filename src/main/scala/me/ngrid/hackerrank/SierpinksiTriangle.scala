@@ -28,5 +28,5 @@ object SierpinksiTriangle extends App{
     calculate(base, n).foreach(println)
   }
 
-  drawTriangles(base = 70, n = 3)
+  drawTriangles(base = 20 , n = 20)
 }

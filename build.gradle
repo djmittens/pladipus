@@ -47,4 +47,6 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
+    // http://mvnrepository.com/artifact/org.scalatest/scalatest_2.11
+    compile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
 }
