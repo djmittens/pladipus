@@ -17,17 +17,20 @@ object FixedIncomeSecurity {
   case class IncomeSecurity(minTradeSize: Int, increment: Int, available: Int) {
     //    def tradeableAmount(n: Int) = minTradeSize + (increment * n)
     //    def isTradeableAmount(n: Int):Boolean = (n - minTradeSize) % increment == 0
-    def tradeableAmount(n: Int) = n - ((n - minTradeSize) % increment)
+
+    def isTradeable(n: Int) = (n >= minTradeSize) && ((n - minTradeSize) % increment == 0)
+
+    //    @scala.annotation.tailrec
+    def findTradeableAmount(n: Int, portfolio: Portfolio): Int = {
+      val amt = n - ((n - minTradeSize) % increment)
+      if (amt > 0 && isTradeable(portfolio.ordered - amt)) amt else 0
+    }
 
     def allocate(a: Int) = copy(available = available - a)
   }
 
 
-  @scala.annotation.tailrec
   def allocateSecurity(security: IncomeSecurity, orders: Seq[Portfolio]): Seq[Portfolio] = {
-
-    if (security.available < security.minTradeSize || !orders.exists(_.ordered > 0))
-      return orders
 
     def doAllocate(security: IncomeSecurity): PartialFunction[(Portfolio, Double), (Portfolio, Int)] = {
       // Oh man if this thing sucks then let it suck
@@ -39,23 +42,22 @@ object FixedIncomeSecurity {
       case (portfolio, propAlloc) if propAlloc >= security.minTradeSize =>
         val amt =
           if (propAlloc >= portfolio.ordered) portfolio.ordered
-          else security.tradeableAmount(propAlloc.toInt)
+          else security.findTradeableAmount(propAlloc.toInt, portfolio)
         (portfolio.allocate(amt), amt)
 
       case (portfolio, propAlloc) => (portfolio, 0)
     }
 
-    val orderedTotal = orders.map(_.ordered).sum
-
     //      .map(o => o -> o.propAllocation(orderedTotal, security.available))
-    val (o, s) = orders.sortBy(x => (x.ordered, x.id))
-      .zip(orders.tails.toSeq.map(_.map(_.ordered).sum))
+    val sorted = orders.sortBy(x => (x.ordered, x.id))
+    val (o, s) = sorted
+      .zip(sorted.tails.toSeq.map(_.map(_.ordered).sum))
       .foldLeft((Seq[Portfolio](), security))((res, p) => {
         val (a, amt) = doAllocate(res._2)(p._1, p._1.propAllocation(p._2, res._2))
         (a +: res._1, res._2.allocate(amt))
       })
 
-    allocateSecurity(s, o)
+    o
   }
 
   def main(args: Array[String]) {
