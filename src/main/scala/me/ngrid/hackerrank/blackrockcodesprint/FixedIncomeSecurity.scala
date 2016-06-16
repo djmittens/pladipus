@@ -4,7 +4,6 @@ package me.ngrid.hackerrank.blackrockcodesprint
   *
   */
 object FixedIncomeSecurity {
-
   case class Portfolio(id: String, ordered: Int, allocated: Int = 0) {
     def amend(ordered: Int) = copy(ordered = ordered)
 
@@ -15,12 +14,8 @@ object FixedIncomeSecurity {
   }
 
   case class IncomeSecurity(minTradeSize: Int, increment: Int, available: Int) {
-    //    def tradeableAmount(n: Int) = minTradeSize + (increment * n)
-    //    def isTradeableAmount(n: Int):Boolean = (n - minTradeSize) % increment == 0
-
     def isTradeable(n: Int) = (n >= minTradeSize) && ((n - minTradeSize) % increment == 0)
 
-    //    @scala.annotation.tailrec
     def findTradeableAmount(n: Int, portfolio: Portfolio): Int = {
       val amt = n - ((n - minTradeSize) % increment)
       if (amt > 0 && isTradeable(portfolio.ordered - amt)) amt else 0
@@ -29,9 +24,7 @@ object FixedIncomeSecurity {
     def allocate(a: Int) = copy(available = available - a)
   }
 
-
   def allocateSecurity(security: IncomeSecurity, orders: Seq[Portfolio]): Seq[Portfolio] = {
-
     def doAllocate(security: IncomeSecurity): PartialFunction[(Portfolio, Double), (Portfolio, Int)] = {
       // Oh man if this thing sucks then let it suck
 
@@ -48,7 +41,6 @@ object FixedIncomeSecurity {
       case (portfolio, propAlloc) => (portfolio, 0)
     }
 
-    //      .map(o => o -> o.propAllocation(orderedTotal, security.available))
     val sorted = orders.sortBy(x => (x.ordered, x.id))
     val (o, s) = sorted
       .zip(sorted.tails.toSeq.map(_.map(_.ordered).sum))
@@ -60,6 +52,17 @@ object FixedIncomeSecurity {
     o
   }
 
+  /**
+    * 5
+    * 14 5 999
+    * p01 364
+    * p02 179
+    * p03 354
+    * p04 334
+    * p05 119
+    *
+    * @param args
+    */
   def main(args: Array[String]) {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
     val n = io.StdIn.readInt
