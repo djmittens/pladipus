@@ -1,4 +1,4 @@
-package me.ngrid.hackerrank
+package me.ngrid.hackerrank.fractals
 
 /**
   * Draws an ascii Sierpinski triangle.
