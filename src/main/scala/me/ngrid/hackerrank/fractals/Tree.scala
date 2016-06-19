@@ -21,7 +21,6 @@ object Tree extends App {
 
    def drawTree(height: Int, maxIt: Int): Unit = {
      if(maxIt == 0) getV(height) ++ getI(height)
-     max
    }
   getV(11).foreach(println)
   getI(11).foreach(println)

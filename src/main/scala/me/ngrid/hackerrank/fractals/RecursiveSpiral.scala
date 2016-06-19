@@ -3,7 +3,7 @@ package me.ngrid.hackerrank.fractals
 /**
   * Draws a size x size spiral using recursion
   */
-object Spiral extends App{
+object RecursiveSpiral extends App{
   val `_` = ' '
   val `*` = '*'
   def spiral (size: Int): Seq[Seq[Char]] = {
