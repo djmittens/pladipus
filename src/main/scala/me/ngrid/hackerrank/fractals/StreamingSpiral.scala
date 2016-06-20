@@ -39,17 +39,20 @@ object StreamingSpiral extends App {
     )
   }
 
-  val getSpiral: PartialFunction[Int, Spiral] = {
+  val getSpiral: PartialFunction[Int, Stream[Spiral]] = {
     case size if (size % 4) == 0 =>
-      spirals(minSpiral(4))(size / 4 - 1)
+      Seq(Seq[Char]()) #:: spirals(minSpiral(4))
     case size =>
       val min = size % 4
-      spirals(minSpiral(min))(size / 4)
+      spirals(minSpiral(min))
   }
 
   def drawSpiral(s: Spiral) = s.foreach(x => println(x.mkString))
 
-  drawSpiral(getSpiral(12))
+  val size = 12
+  val sp = getSpiral(size)
 
-  spirals(minSpiral(4)).take(2).reverse.foreach(drawSpiral)
+  drawSpiral(sp(size / 4))
+
+  sp.take(size/4 + 1).reverse.tail.foreach(drawSpiral)
 }
