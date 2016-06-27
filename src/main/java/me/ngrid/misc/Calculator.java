@@ -92,7 +92,7 @@ public class Calculator {
                     // Iff its right associative and its precedence is smaller than whats in the stack
                     // write that stuff out into the output.
                     //
-                    if (tmp != null &&
+                    else if (tmp != null &&
                             tmp.getAssociativity() == Operator.Associativity.Right &&
                             op.getPrecedence() > tmp.getPrecedence()) {
                         this.rpn.add(ops.pop());
