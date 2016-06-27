@@ -10,8 +10,6 @@ public class MedianOfSortedArrays {
         int n = nums1.length - 1, n0 = 0;
         int m = nums2.length - 1, m0 = 0;
 
-
-
         do {
             // Iff any of the arrays is empty clearly the median is in the other array.
             double med1 = getMedian(nums1, n0, n), med2 = getMedian(nums2, m0, m);
