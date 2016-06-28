@@ -1,9 +1,12 @@
 package me.ngrid.cake
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   */
+@RunWith(classOf[JUnitRunner])
 class AppleStocks$Test extends FlatSpec with Matchers {
   it should "compute maximum value" in {
     AppleStocks.getMaxExchange(Seq(10, 7, 5, 8, 11, 9)) should equal (6)

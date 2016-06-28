@@ -9,7 +9,7 @@
 
 plugins {
     id 'me.champeau.gradle.jmh' version '0.2.0'
-    id "com.github.maiflai.scalatest" version "0.12"
+//    id "com.github.maiflai.scalatest" version "0.12"
 }
 
 // Apply the java plugin to add support for Java
@@ -50,7 +50,7 @@ dependencies {
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
 
-    testCompile group: 'org.pegdown', name: 'pegdown', version: '1.6.0'
+//    testCompile group: 'org.pegdown', name: 'pegdown', version: '1.6.0'
     // http://mvnrepository.com/artifact/org.scalatest/scalatest_2.11
     testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
 
