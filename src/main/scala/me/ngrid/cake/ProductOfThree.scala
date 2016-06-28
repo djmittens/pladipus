@@ -17,11 +17,14 @@ object ProductOfThree {
 
   def memoized(in: IndexedSeq[Int]): Int = {
     var g2 = 0
+    var l2 = 0
     var g3 = 0
 
     for(i <- 2 until in.length) {
-      g2 = Math.max(g2, in(i - 2) * in(i - 1))
-      g3 = Math.max(g3, g2 * in(i))
+      val p = in(i - 2) * in(i - 1)
+      g2 = Math.max(g2, p)
+      l2 = Math.min(l2, p)
+      g3 = Math.max(g3, Math.max(in(i) * g2, in(i) * l2))
     }
 
     g3

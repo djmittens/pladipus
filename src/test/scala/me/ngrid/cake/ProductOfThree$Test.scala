@@ -14,5 +14,6 @@ class ProductOfThree$Test extends FlatSpec with Matchers{
     ProductOfThree.memoized(IndexedSeq(-10, -10, 1, 3, 2)) should be (300)
     ProductOfThree.memoized(IndexedSeq(-10, 10, 1, -3, 2)) should be (300)
 
+    ProductOfThree.memoized(IndexedSeq(-10, 1, -10, 1, 10 )) should be (1000)
   }
 }
