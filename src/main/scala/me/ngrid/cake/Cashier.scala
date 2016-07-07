@@ -45,14 +45,14 @@ object Cashier {
   }
 
   def iterative(amount: Int, denoms: Seq[Int]): Int = {
-    val m = mutable.ArrayBuffer.fill[Int](amount)(0)
+    val m = mutable.ArrayBuffer.fill[Int](amount)(1)
     m(denoms.head) = 1
 
     def getCount(i: Int): Int = if (i > 0) m(i) else 0
 
     for {
       d <- denoms
-      i <- m.indices.tail
+      i <- m.indices.drop(2)
     } {
       m(i) += getCount(i - d)
     }
