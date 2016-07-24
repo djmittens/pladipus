@@ -81,4 +81,10 @@ public class Array {
         }
         return array;
     }
+
+
+    public static void print(int[] ar) {
+        String s = Arrays.stream(ar).mapToObj(Integer::toString).collect(java.util.stream.Collectors.joining(" "));
+        System.out.println(s);
+    }
 }

@@ -8,10 +8,6 @@ import java.util.stream.Collectors;
  * Created by grimm on 7/23/16.
  */
 public class LoveLetterMystery {
-    public static void print(int[] ar) {
-        String s = Arrays.stream(ar).mapToObj(Integer::toString).collect(java.util.stream.Collectors.joining(" "));
-        System.out.println(s);
-    }
     static int minReductions(CharSequence cs) {
         int l = cs.length() /  2;
         int count = 0;
