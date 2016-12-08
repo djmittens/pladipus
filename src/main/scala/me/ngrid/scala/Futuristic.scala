@@ -82,7 +82,7 @@ object Futuristic extends App with MonadicFutures {
     x * 2
   } #>>> {
     case Success(4) => f2
-  } ~> println >> f1
+  } ?>> f3 ~> println >> f1 ~> println
 
   Await.result(res, 1.seconds)
 }
