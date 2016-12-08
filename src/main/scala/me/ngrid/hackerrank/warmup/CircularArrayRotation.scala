@@ -9,8 +9,5 @@ object CircularArrayRotation extends App {
 
   val queries = (1 to q.toInt).
     map(_ => StdIn.readLine.toInt - k.toInt)
-    .map({
-      case i if i
-    })
 
 }
