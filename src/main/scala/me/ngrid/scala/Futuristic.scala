@@ -32,10 +32,12 @@ object Futuristic extends App with MonadicFutures {
     case Success(20) =>
       println("moo")
       f2
-  } <| println <>> { _ => f4 } <-> f3 <| println
+  } <| println <>> { _ => f4 } <-> f3 >| println
 
-  println(Await.result(res, 1.seconds))
+  Await.result(res, 1.seconds)
 }
+
+object MonadicFutures extends MonadicFutures
 
 trait MonadicFutures {
 
@@ -44,16 +46,13 @@ trait MonadicFutures {
   implicit class MonadicFuture[T](self: Future[T]) {
 
     /**
-      * Perform a side effecting operation on the successful result of this future
+      * Foreach on success
       * @param f
       * @param ec
       * @return
       */
     def >|(f: (T) => Unit)(implicit ec: ExecutionContext): Future[T] = {
-      promiseOnComplete[T] { (t, p) =>
-        t foreach f
-        p complete t
-      }.future
+      self.map{x => f(x); x}
     }
 
     /**
@@ -160,16 +159,6 @@ trait MonadicFutures {
       */
     def <>>(f: (Throwable) => Future[T])(implicit ec: ExecutionContext): Future[T] = {
       promiseOnFailure { (e, p) => f(e).onComplete(p.complete) }.future
-    }
-
-    private def promiseOnSuccess[U](f: (T, Promise[U]) => Unit)
-                                         (implicit ec: ExecutionContext): Promise[U] = {
-      promiseOnComplete[U] { (t, p) =>
-        t match {
-          case Success(v) => f(v, p)
-          case Failure(e) => p.failure(e)
-        }
-      }
     }
 
     private def promiseOnFailure(f: (Throwable, Promise[T]) => Unit)
