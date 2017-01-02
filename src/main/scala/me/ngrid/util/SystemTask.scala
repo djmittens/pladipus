@@ -10,7 +10,7 @@ import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import scala.util.Try
 
 object SystemTask extends LazyLogging {
-  def java(timeout: Duration = 180.seconds)(op: () => Unit)(implicit ec: ExecutionContext): SystemTask = {
+  def java(timeout: Duration)(op: () => Unit)(implicit ec: ExecutionContext): SystemTask = {
     new SystemTask(timeout, (stdIn: InputStream, stdOut: PrintStream) => {
 
       logger.info("Waiting to perform application timing ...")
@@ -31,7 +31,7 @@ object SystemTask extends LazyLogging {
     })
   }
 
-  def scala(timeout: Duration = 180.seconds)(op: () => Unit)(implicit ec: ExecutionContext): SystemTask = {
+  def scala(timeout: Duration)(op: () => Unit)(implicit ec: ExecutionContext): SystemTask = {
     new SystemTask(timeout, (stdIn: InputStream, stdOut: PrintStream) => {
       Await.result(time {
         Console.withIn(stdIn) {
@@ -78,7 +78,5 @@ class SystemTask(timeout: Duration, op: (InputStream, PrintStream) => Long)
   def createTempFile(): File = {
     Files.createTempFile("nicksbench", ".txt").toFile
   }
-
 }
 
-object Benchmarking {}

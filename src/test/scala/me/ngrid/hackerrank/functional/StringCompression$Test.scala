@@ -7,7 +7,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.ExecutionContext
 
-//@RunWith(classOf[JUnitRunner])
+@RunWith(classOf[JUnitRunner])
 class StringCompression$Test extends FlatSpec with SystemTaskSpec with Matchers {
   implicit val ec: ExecutionContext = ExecutionContext.global
 
