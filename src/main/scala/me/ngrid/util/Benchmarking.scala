@@ -11,28 +11,21 @@ import scala.util.Try
 
 trait Benchmarking extends LazyLogging with MonadicFutures{
 
-  def timeApp(stdIn: String, op: => Unit, timeout: Duration = 180.seconds)
-             (implicit ec: ExecutionContext): (Long, File) =  {
+  def timeSystemTask(stdIn: InputStream, op: => Unit, timeout: Duration)
+                    (implicit ec: ExecutionContext): (Long, File) =  {
     val tmp = createTempFile()
     tmp.deleteOnExit()
-    val instr = new ByteArrayInputStream(stdIn.getBytes)
     val outstr = new PrintStream(tmp)
     try {
       logger.info(s"Created a temporary file for output in ${tmp.getAbsolutePath}")
-      timeApp(instr, outstr, op, timeout) -> tmp
-    } catch {
-      case e: Throwable =>
-        logger.error("caught an unexpected exception", e)
-        if(tmp.exists()) tmp.delete()
-        throw e
+      timeSystemTask(stdIn, outstr, op, timeout) -> tmp
     } finally {
-      instr.close()
       outstr.close()
     }
   }
 
-  def timeApp (stdIn: InputStream, stdOut: PrintStream, op: => Unit, timeout: Duration)
-              (implicit ec: ExecutionContext): Long = {
+  def timeSystemTask(stdIn: InputStream, stdOut: PrintStream, op: => Unit, timeout: Duration)
+                    (implicit ec: ExecutionContext): Long = {
     logger.info("Waiting to perform application timing ...")
     Benchmarking.synchronized {
       val in = System.in
@@ -41,7 +34,11 @@ trait Benchmarking extends LazyLogging with MonadicFutures{
         logger.info(s"Beginning timing of an application, reassigning global stdin / stdout")
         System.setIn(stdIn)
         System.setOut(stdOut)
-        Await.result(time(op), timeout)
+        scala.Console.withIn(stdIn) {
+         scala.Console.withOut(stdOut) {
+           Await.result(time(op), timeout)
+         }
+        }
       } finally {
         System.setIn(in)
         System.setOut(out)
