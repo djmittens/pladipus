@@ -1,13 +1,13 @@
 package me.ngrid.hackerrank.functional
 
-import me.ngrid.util.{SystemTask, SystemTaskSpec}
+import me.ngrid.util.SystemTaskSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.ExecutionContext
 
-@RunWith(classOf[JUnitRunner])
+//@RunWith(classOf[JUnitRunner])
 class StringCompression$Test extends FlatSpec with SystemTaskSpec with Matchers {
   implicit val ec: ExecutionContext = ExecutionContext.global
 
@@ -19,8 +19,8 @@ class StringCompression$Test extends FlatSpec with SystemTaskSpec with Matchers 
     algorithm {
       "/hackerrank/stringcompression/input-small.txt"
     } validateTime { t =>
-      assert(t > 1000)
       logger.info(s"Completed with times ${timeFromNano(t)}")
+      assert(t > 1000)
     } validateOutput {
       compareWithFile("/hackerrank/stringcompression/output-small.txt")
     }
@@ -30,8 +30,8 @@ class StringCompression$Test extends FlatSpec with SystemTaskSpec with Matchers 
     algorithm {
       "/hackerrank/stringcompression/input-large.txt"
     } validateTime { t =>
-      assert(t > 1000)
       logger.info(s"Completed with times ${timeFromNano(t)}")
+      assert(t < 2553479467l) // 2 seconds
     } validateOutput {
       compareWithFile("/hackerrank/stringcompression/output-large.txt")
     }
