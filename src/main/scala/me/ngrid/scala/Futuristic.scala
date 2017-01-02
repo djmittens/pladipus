@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
 
-object Futuristic extends App with MonadicFutures {
+object Futuristic extends App with MFutures {
   import ExecutionContext.Implicits.global
 
   val f1 = Future {
@@ -32,67 +32,50 @@ object Futuristic extends App with MonadicFutures {
     case Success(20) =>
       println("moo")
       f2
+    case _ => f3
   } <| println <>> { _ => f4 } <-> f3 >| println
 
   Await.result(res, 1.seconds)
 }
 
-object MonadicFutures extends MonadicFutures
+object MFutures extends MFutures
 
-trait MonadicFutures {
+trait MFutures {
 
   import scala.language.implicitConversions
 
   implicit class MonadicFuture[T](self: Future[T]) {
 
-    /**
+    /*
       * Foreach on success
-      * @param f
-      * @param ec
-      * @return
       */
     def >|(f: (T) => Unit)(implicit ec: ExecutionContext): Future[T] = {
       self.map{x => f(x); x}
     }
 
-    /**
+    /*
       * Map successful value of this future.
-      * @param f
-      * @param ec
-      * @tparam U
-      * @return
       */
     def >[U](f: (T) => U)(implicit ec: ExecutionContext): Future[U] = {
       self.map(f)
     }
 
-    /**
+    /*
       * Filter (turn into failure)
-      * @param f
-      * @param ec
-      * @return
       */
     def >*(f: (T) => Boolean)(implicit ec: ExecutionContext): Future[T] = {
       self.filter(f)
     }
 
-    /**
+    /*
       * Flat Map successfull value
-      * @param f
-      * @param ec
-      * @tparam U
-      * @return
       */
     def >>[U](f: (T) => Future[U])(implicit ec: ExecutionContext): Future[U] = {
       self.flatMap(f)
     }
 
-    /**
+    /*
       * Flat Map the complete result, success and failure
-      * @param f
-      * @param ec
-      * @tparam U
-      * @return
       */
     def ><[U](f: Try[T] => Future[U])(implicit ec: ExecutionContext): Future[U] = {
       promiseOnComplete[U] { (t, p) =>
@@ -100,13 +83,9 @@ trait MonadicFutures {
       }.future
     }
 
-    /**
+    /*
       * Join self to another future,
       * Resolves only when both futures resolve, only return the result of the other future
-      *
-      * @param other
-      * @tparam U
-      * @return
       */
     def <->[U](other: Future[U])(implicit ec: ExecutionContext): Future[U] = {
       promiseOnComplete[U] { (t, p) =>
@@ -114,11 +93,8 @@ trait MonadicFutures {
       }.future
     }
 
-    /**
+    /*
       * ForEach on failure
-      * @param f
-      * @param ec
-      * @return
       */
     def <|(f: (Throwable) => Unit)(implicit ec: ExecutionContext): Future[T] = {
       promiseOnFailure {
@@ -126,11 +102,8 @@ trait MonadicFutures {
       }.future
     }
 
-    /**
+    /*
       * Filter on failure
-      * @param f
-      * @param ec
-      * @return
       */
     def <*(f: (Throwable) => Option[T])(implicit ec: ExecutionContext): Future[T] = {
       promiseOnFailure { (e, p) =>
@@ -138,12 +111,8 @@ trait MonadicFutures {
       }.future
     }
 
-    /**
+    /*
       * Map on a failure
-      * @param f
-      * @param ec
-      * @tparam U
-      * @return
       */
     def <>[U <: Throwable](f: (Throwable) => U)(implicit ec: ExecutionContext): Future[T] = {
       promiseOnFailure { (e, p) =>
@@ -151,11 +120,8 @@ trait MonadicFutures {
       }.future
     }
 
-    /**
+    /*
       * Flat Map on failure
-      * @param f
-      * @param ec
-      * @return
       */
     def <>>(f: (Throwable) => Future[T])(implicit ec: ExecutionContext): Future[T] = {
       promiseOnFailure { (e, p) => f(e).onComplete(p.complete) }.future
