@@ -108,4 +108,8 @@ class MonadicFuture[T](private val self: Future[T]) extends Future[T] {
 
   @scala.throws[Exception](classOf[Exception])
   override def result(atMost: Duration)(implicit permit: CanAwait): T = self.result(atMost)
+
+  override def transform[S](f: Try[T] => Try[S])(implicit executor: ExecutionContext): Future[S] = self.transform(f)
+
+  def transformWith[S](f: Try[T] => Future[S])(implicit executor: ExecutionContext): Future[S] = self.transformWith(f)
 }

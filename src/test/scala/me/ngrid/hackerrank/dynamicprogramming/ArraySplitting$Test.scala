@@ -1,13 +1,10 @@
 package me.ngrid.hackerrank.dynamicprogramming
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   *
   */
-@RunWith(classOf[JUnitRunner])
 class ArraySplitting$Test extends FlatSpec with Matchers {
 
   import ArraySplitting._

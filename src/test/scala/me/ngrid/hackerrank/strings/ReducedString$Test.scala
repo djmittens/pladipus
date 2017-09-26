@@ -1,13 +1,11 @@
 package me.ngrid.hackerrank.strings
 
-import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by grimm on 7/23/16.
   */
-@RunWith(classOf[JUnitRunner])
 class ReducedString$Test extends FlatSpec with Matchers{
   behavior of "String Reducer"
   it should "reduce a basic case" in {

@@ -1,13 +1,10 @@
 package me.ngrid.cake
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   *
   */
-@RunWith(classOf[JUnitRunner])
 class HiCal$Test extends FlatSpec with Matchers{
   "isIntersecting" should "true, when first segment contains the second" in {
     HiCal.isIntersecting((0, 3), (1, 2)) should be(true)

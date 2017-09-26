@@ -1,13 +1,10 @@
 package me.ngrid.hackerrank.strings
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   * Created by grimm on 7/23/16.
   */
-@RunWith(classOf[JUnitRunner])
 class Pangram$Test extends FlatSpec with Matchers{
   behavior of "Pangram"
   it should "totally detect a pangram when it sees one, eg a fox, cmon just a fox" in {

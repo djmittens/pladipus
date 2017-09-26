@@ -1,12 +1,9 @@
 package me.ngrid.cake
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
   */
-@RunWith(classOf[JUnitRunner])
 class ProductOfThree$Test extends FlatSpec with Matchers{
   it should "Find the basic product" in {
     ProductOfThree.naive(IndexedSeq(9, 10, 12, 4, 2, 11)) should be (1320)

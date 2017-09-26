@@ -1,6 +1,6 @@
 package me.ngrid.cake
 
-import org.scalatest.{FlatSpec, FunSuite, Matchers}
+import org.scalatest.{FlatSpec, Matchers}
 
 /**
   */

@@ -1,13 +1,10 @@
 package me.ngrid.hackerrank.functional
 
 import me.ngrid.util.SystemTaskSpec
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.concurrent.ExecutionContext
 
-@RunWith(classOf[JUnitRunner])
 class StringCompression$Test extends FlatSpec with SystemTaskSpec with Matchers {
   implicit val ec: ExecutionContext = ExecutionContext.global
 

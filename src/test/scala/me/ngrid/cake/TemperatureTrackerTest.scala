@@ -1,13 +1,11 @@
 package me.ngrid.cake
 
-import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers, Outcome}
+import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
 
 /**
   *
   */
-@RunWith(classOf[JUnitRunner])
 class TemperatureTrackerTest extends FlatSpec with Matchers with BeforeAndAfterEach{
 
   var tracker = new TemperatureTracker()

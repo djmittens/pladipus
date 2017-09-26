@@ -1,13 +1,10 @@
 package me.ngrid.hackerrank.dynamicprogramming
 
-import org.junit.runner.RunWith
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatest.junit.JUnitRunner
 
 /**
   * Created by grimm on 7/22/16.
   */
-@RunWith(classOf[JUnitRunner])
 class MaxSubarray$Test extends FlatSpec with Matchers {
 
   behavior of "Max Subarrays"
